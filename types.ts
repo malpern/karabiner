@@ -11,37 +11,33 @@ export interface Manipulator {
   to_after_key_up?: To[];
   to_if_alone?: To[];
   parameters?: Parameters;
-  conditions?: Conditions[];
+  conditions?: Condition[];
 }
 
 export interface Parameters {
   "basic.simultaneous_threshold_milliseconds"?: number;
 }
 
-type Conditions =
-  | FrontMostApplicationCondition
+type Condition =
+  | ApplicationCondition
   | DeviceCondition
-  | KeybaordTypeCondition
+  | KeyboardTypeCondition
   | InputSourceCondition
-  | VaribaleCondition
+  | VariableCondition
   | EventChangedCondition;
 
-type FrontMostApplicationCondition = {
+interface ApplicationCondition {
   type: "frontmost_application_if" | "frontmost_application_unless";
   bundle_identifiers?: string[];
   file_paths?: string[];
   description?: string;
-};
+}
 
-type DeviceCondition = {
-  type:
-    | "device_if"
-    | "device_unless"
-    | "device_exists_if"
-    | "device_exists_unless";
+interface DeviceCondition {
+  type: "device_if" | "device_unless" | "device_exists_if" | "device_exists_unless";
   identifiers: Identifiers;
   description?: string;
-};
+}
 
 interface Identifiers {
   vendor_id?: number;
@@ -53,17 +49,17 @@ interface Identifiers {
   is_built_in_keyboard?: boolean;
 }
 
-type KeybaordTypeCondition = {
+interface KeyboardTypeCondition {
   type: "keyboard_type_if" | "keyboard_type_unless";
   keyboard_types: string[];
   description?: string;
-};
+}
 
-type InputSourceCondition = {
+interface InputSourceCondition {
   type: "input_source_if" | "input_source_unless";
   input_sources: InputSource[];
   description?: string;
-};
+}
 
 interface InputSource {
   language?: string;
@@ -71,41 +67,41 @@ interface InputSource {
   input_mode_id?: string;
 }
 
-type VaribaleCondition = {
+interface VariableCondition {
   type: "variable_if" | "variable_unless";
   name: string | number | boolean;
   value: string | number;
   description?: string;
-};
+}
 
-type EventChangedCondition = {
+interface EventChangedCondition {
   type: "event_changed_if" | "event_changed_unless";
   value: boolean;
   description?: string;
-};
-
-export interface SimultaneousFrom {
-  key_code: KeyCode;
 }
 
-export interface SimultaneousOptions {
-  key_down_order?: "insensitive" | "strict" | "strict_inverse";
-  detect_key_down_uninterruptedly?: boolean;
-}
-
-export interface From {
+interface From {
   key_code?: KeyCode;
   simultaneous?: SimultaneousFrom[];
   simultaneous_options?: SimultaneousOptions;
   modifiers?: Modifiers;
 }
 
-export interface Modifiers {
+interface SimultaneousFrom {
+  key_code: KeyCode;
+}
+
+interface SimultaneousOptions {
+  key_down_order?: "insensitive" | "strict" | "strict_inverse";
+  detect_key_down_uninterruptedly?: boolean;
+}
+
+interface Modifiers {
   optional?: string[];
   mandatory?: string[];
 }
 
-export interface To {
+interface To {
   key_code?: KeyCode;
   modifiers?: string[];
   shell_command?: string;
@@ -115,15 +111,10 @@ export interface To {
   };
   mouse_key?: MouseKey;
   pointing_button?: string;
-  /**
-   * Power Management plugin
-   * @example: sleep system
-   * @see: {@link https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/to/software_function/iokit_power_management_sleep_system/}
-   */
   software_function?: SoftwareFunction;
 }
 
-export interface MouseKey {
+interface MouseKey {
   y?: number;
   x?: number;
   speed_multiplier?: number;
@@ -131,7 +122,7 @@ export interface MouseKey {
   horizontal_wheel?: number;
 }
 
-export interface SoftwareFunction {
+interface SoftwareFunction {
   iokit_power_management_sleep_system?: {};
 }
 
@@ -230,46 +221,27 @@ export type KeyCode =
   | "f19"
   | "f20"
   | "f21"
-  //   not_to: true
   | "f22"
-  //   not_to: true
   | "f23"
-  //   not_to: true
   | "f24"
-  //   not_to: true
   | "display_brightness_decrement"
-  //   not_from: true
   | "display_brightness_increment"
-  //   not_from: true
   | "mission_control"
-  //   not_from: true
   | "launchpad"
-  //   not_from: true
   | "dashboard"
-  //   not_from: true
   | "illumination_decrement"
-  //   not_from: true
   | "illumination_increment"
-  //   not_from: true
   | "rewind"
-  //   not_from: true
   | "play_or_pause"
-  //   not_from: true
   | "fastforward"
-  //   not_from: true
   | "mute"
   | "volume_decrement"
   | "volume_increment"
   | "eject"
-  //   not_from: true
   | "apple_display_brightness_decrement"
-  //   not_from: true
   | "apple_display_brightness_increment"
-  //   not_from: true
   | "apple_top_case_display_brightness_decrement"
-  //   not_from: true
   | "apple_top_case_display_brightness_increment"
-  //   not_from: true
   | "keypad_num_lock"
   | "keypad_slash"
   | "keypad_asterisk"
@@ -290,7 +262,6 @@ export type KeyCode =
   | "keypad_equal_sign"
   | "keypad_comma"
   | "vk_none"
-  //   not_from: true
   | "print_screen"
   | "scroll_lock"
   | "pause"
@@ -299,120 +270,67 @@ export type KeyCode =
   | "help"
   | "power"
   | "execute"
-  //   not_to: true
   | "menu"
-  //   not_to: true
   | "select"
-  //   not_to: true
   | "stop"
-  //   not_to: true
   | "again"
-  //   not_to: true
   | "undo"
-  //   not_to: true
   | "cut"
-  //   not_to: true
   | "copy"
-  //   not_to: true
   | "paste"
-  //   not_to: true
   | "find"
-  //   not_to: true
   | "international1"
   | "international2"
-  //   not_to: true
   | "international3"
   | "international4"
-  //   not_to: true
   | "international5"
-  //   not_to: true
   | "international6"
-  //   not_to: true
   | "international7"
-  //   not_to: true
   | "international8"
-  //   not_to: true
   | "international9"
-  //   not_to: true
   | "lang1"
   | "lang2"
   | "lang3"
-  //   not_to: true
   | "lang4"
-  //   not_to: true
   | "lang5"
-  //   not_to: true
   | "lang6"
-  //   not_to: true
   | "lang7"
-  //   not_to: true
   | "lang8"
-  //   not_to: true
   | "lang9"
-  //   not_to: true
   | "japanese_eisuu"
   | "japanese_kana"
   | "japanese_pc_nfer"
-  //   not_to: true
   | "japanese_pc_xfer"
-  //   not_to: true
   | "japanese_pc_katakana"
-  //   not_to: true
   | "keypad_equal_sign_as400"
-  //   not_to: true
   | "locking_caps_lock"
-  //   not_to: true
   | "locking_num_lock"
-  //   not_to: true
   | "locking_scroll_lock"
-  //   not_to: true
   | "alternate_erase"
-  //   not_to: true
   | "sys_req_or_attention"
-  //   not_to: true
   | "cancel"
-  //   not_to: true
   | "clear"
-  //   not_to: true
   | "prior"
-  //   not_to: true
   | "return"
-  //   not_to: true
   | "separator"
-  //   not_to: true
   | "out"
-  //   not_to: true
   | "oper"
-  //   not_to: true
   | "clear_or_again"
-  //   not_to: true
   | "cr_sel_or_props"
-  //   not_to: true
   | "ex_sel"
-  //   not_to: true
   | "left_alt"
   | "left_gui"
   | "right_alt"
   | "right_gui"
   | "vk_consumer_brightness_down"
-  //   not_from: true
   | "vk_consumer_brightness_up"
-  //   not_from: true
   | "vk_mission_control"
-  //   not_from: true
   | "vk_launchpad"
-  //   not_from: true
   | "vk_dashboard"
-  //   not_from: true
   | "vk_consumer_illumination_down"
-  //   not_from: true
   | "vk_consumer_illumination_up"
-  //   not_from: true
   | "vk_consumer_previous"
-  //   not_from: true
   | "vk_consumer_play"
-  //   not_from: true
   | "vk_consumer_next"
-  //   not_from: true
   | "volume_down"
   | "volume_up";
