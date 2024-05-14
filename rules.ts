@@ -18,8 +18,34 @@ const rules: KarabinerRules[] = [
   },
   ...createHyperSubLayers({
     spacebar: open("raycast://extensions/stellate/mxstbr-commands/create-notion-todo"),
-    b: { t: open("https://twitter.com"), p: open("https://qrtr.ly/plan"), y: open("https://news.ycombinator.com"), f: open("https://facebook.com"), r: open("https://reddit.com") },
-    o: { 1: app("1Password"), g: app("Google Chrome"), c: app("Notion Calendar"), v: app("Visual Studio Code"), d: app("Discord"), s: app("Slack"), e: app("Superhuman"), n: app("Notion"), t: app("Terminal"), h: open("notion://www.notion.so/stellatehq/7b33b924746647499d906c55f89d5026"), z: app("zoom.us"), m: app("Texts"), f: app("Finder"), r: app("Texts"), i: app("Texts"), p: app("Spotify"), a: app("iA Presenter"), w: open("Texts"), l: open("raycast://extensions/stellate/mxstbr-commands/open-mxs-is-shortlink") },
+    b: {
+      t: open("https://twitter.com"),
+      p: open("https://qrtr.ly/plan"),
+      y: open("https://news.ycombinator.com"),
+      f: open("https://facebook.com"),
+      r: open("https://reddit.com"),
+    },
+    o: {
+      1: app("1Password"),
+      g: app("Google Chrome"),
+      c: app("Notion Calendar"),
+      v: app("Visual Studio Code"),
+      d: app("Discord"),
+      s: app("Slack"),
+      e: app("Superhuman"),
+      n: app("Notion"),
+      t: app("Terminal"),
+      h: open("notion://www.notion.so/stellatehq/7b33b924746647499d906c55f89d5026"),
+      z: app("zoom.us"),
+      m: app("Texts"),
+      f: app("Finder"),
+      r: app("Texts"),
+      i: app("Texts"),
+      p: app("Spotify"),
+      a: app("iA Presenter"),
+      w: open("Texts"),
+      l: open("raycast://extensions/stellate/mxstbr-commands/open-mxs-is-shortlink"),
+    },
     w: {
       semicolon: { description: "Window: Hide", to: [{ key_code: "h", modifiers: ["right_command"] }] },
       y: rectangle("previous-display"),
@@ -84,9 +110,17 @@ fs.writeFileSync(
   JSON.stringify(
     {
       global: { show_in_menu_bar: false },
-      profiles: [{ name: "Default", complex_modifications: { rules } }],
+      profiles: [
+        {
+          name: "Micah",
+          complex_modifications: { rules },
+          selected: true, // Set the "Micah" profile as the active profile
+        },
+      ],
     },
     null,
     2
   )
 );
+
+console.log("Karabiner-Elements configuration updated successfully.");
