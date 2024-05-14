@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hyper Key Configuration for Karabiner Elements</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet">
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -51,14 +51,14 @@
   <h2>Installation</h2>
   <ol>
     <li><strong>Clone the Repository</strong>:
-      <pre><code>git clone https://github.com/yourusername/karabiner-hyper-key.git
+      <pre><code class="language-bash">git clone https://github.com/yourusername/karabiner-hyper-key.git
 cd karabiner-hyper-key</code></pre>
     </li>
     <li><strong>Install Dependencies</strong>:
-      <pre><code>yarn install</code></pre>
+      <pre><code class="language-bash">yarn install</code></pre>
     </li>
     <li><strong>Build the Configuration</strong>:
-      <pre><code>yarn run build</code></pre>
+      <pre><code class="language-bash">yarn run build</code></pre>
     </li>
     <li><strong>Load the Configuration in Karabiner Elements</strong>:
       <p>Open Karabiner Elements and navigate to the <strong>Complex Modifications</strong> tab.</p>
@@ -68,7 +68,7 @@ cd karabiner-hyper-key</code></pre>
   <h2>File Structure</h2>
   <h3><code>types.ts</code></h3>
   <p>Defines TypeScript types and interfaces for the configuration.</p>
-  <pre><code>export interface KarabinerRules {
+  <pre><code class="language-typescript">export interface KarabinerRules {
   description?: string;
   manipulators?: Manipulator[];
 }
@@ -86,7 +86,7 @@ export interface Manipulator {
 // Additional type definitions...</code></pre>
   <h3><code>utils.ts</code></h3>
   <p>Provides utility functions for creating commands and sublayers.</p>
-  <pre><code>import { LayerCommand } from "./types";
+  <pre><code class="language-typescript">import { LayerCommand } from "./types";
 
 /**
  * Shortcut for "open" shell command
@@ -111,7 +111,7 @@ export function rectangle(name: string): LayerCommand {
 // Additional utility functions...</code></pre>
   <h3><code>hyper_key_config.ts</code></h3>
   <p>Main configuration file defining the hyper key and its sublayers.</p>
-  <pre><code>import fs from "fs";
+  <pre><code class="language-typescript">import fs from "fs";
 import { KarabinerRules } from "./types";
 import { createHyperSubLayers, open, app, rectangle } from "./utils";
 
@@ -137,9 +137,9 @@ const rules: KarabinerRules[] = [
 ];
 
 fs.writeFileSync("karabiner.json", JSON.stringify({ profiles: [{ name: "Default", complex_modifications: { rules } }] }, null, 2));</code></pre>
-  <h2>Example Usage</h2>
+  <h2>Example Usage</h3>
   <h3>Creating a Sublayer</h3>
-  <pre><code>import { createHyperSubLayer } from "./utils";
+  <pre><code class="language-typescript">import { createHyperSubLayer } from "./utils";
 
 const sublayer = createHyperSubLayer("o", {
   g: open("https://google.com"),
@@ -147,7 +147,7 @@ const sublayer = createHyperSubLayer("o", {
   // Additional commands...
 }, ["hyper_sublayer_o"]);\</code></pre>
   <h3>Adding Commands</h3>
-  <pre><code>import { open, app } from "./utils";
+  <pre><code class="language-typescript">import { open, app } from "./utils";
 
 // Open Google Chrome
 const openChrome = open("Google Chrome");
@@ -163,5 +163,8 @@ const open1Password = app("1Password");</code></pre>
   <p>This configuration transforms your Caps Lock key into a powerful productivity tool, providing quick access to applications and commands through well-organized sublayers. Customize it to fit your workflow and enjoy a more efficient computing experience.</p>
   <p>For more detailed customization, refer to the Karabiner Elements documentation and explore the provided TypeScript types and utility functions to extend functionality further.</p>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-typescript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-bash.min.js"></script>
 </body>
 </html>
